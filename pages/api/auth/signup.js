@@ -26,6 +26,7 @@ export default async function (req, res) {
                     username: username,
                     profile_url: profile_url,
                     tutors: [],
+                    paid_classes: {}
                 })
             res.status(200).json({studentCreated: true})
         } catch (error) {

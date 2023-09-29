@@ -22,7 +22,7 @@ export default function Home() {
             })
             const data = await response.json()
             if (data.studentCreated == true) {
-                router.push("/")
+                router.push("/book")
             }
           } catch (error) {
                 console.error("Google login error:", error);
