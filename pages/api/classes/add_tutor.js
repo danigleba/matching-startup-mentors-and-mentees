@@ -20,7 +20,7 @@ export default async function (req, res) {
 
         queryStudentSnap.forEach((doc) => {
             const updatePromise = updateDoc(doc.ref, {
-                tutors: arrayUnion(matchTutor) 
+                tutors: arrayUnion(matchTutor) ,
             })
             updateStudents.push(updatePromise)
         })

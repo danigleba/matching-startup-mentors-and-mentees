@@ -21,7 +21,15 @@ export default function Home() {
     const [matchTutor, setMatchTutor] = useState({})
     const [paidCalsses, setPaidClasses] = useState()
     const [price, setPrice] = useState(0)
+    const [nClasses, setNClasses] = useState()
     const [clientSecret, setClientSecret] = useState()
+    const [allowBooking, setAllowBooking] = useState(false)
+
+    //Class booking 
+    const [day, setDay] = useState("")
+    const [time, setTime] = useState("")
+    const [recurring, setRecurring] = useState(false)
+    const [nRecurring, setNRecurring] = useState(0)
 
     //Booking classes
     const findTutor = async () => {
@@ -47,6 +55,21 @@ export default function Home() {
             .then(data => setPaidClasses(data.data))
     }
 
+    const bookClasses = async () => {
+        if (day != "" && time != "") {
+            const url = "/api/classes/add_classes?tutor_email=" + matchTutor?.email + "&student_email=" + user?.email + "&time=" + time + "&profile_url=" + user?.profile_url  + "&day=" + day + "&recurring=" + recurring + "&nRecurring=" + nRecurring
+            fetch(url)
+                .then(response => response.json())
+                .then(data => setPaidClasses(data.data))
+
+            const url2 = "/api/classes/delete_paid_classes?tutor_email=" + matchTutor?.email + "&student_email=" + user?.email + "&nBooked=" + nRecurring + "&recurring=" + recurring
+            fetch(url2)
+                .then(response => response.json())
+                .then(data => setPaidClasses(data.data)) 
+        }
+
+    }
+
     useEffect(() => {
       onAuthStateChanged(auth, (user) => {
         if (user) {
@@ -62,6 +85,16 @@ export default function Home() {
         findTutor()
       }, [tutor])
 
+      useEffect(() => {
+        if (price == (1*matchTutor?.prices?.one_class * 100)) {
+            setNClasses(1)
+        } else if (price == (10*matchTutor?.prices?.ten_classes * 100)) {
+            setNClasses(10)
+        } else if (price == (20*matchTutor?.prices?.twenty_classes * 100)) {
+            setNClasses(20)
+        }
+    }, [price])
+
     useEffect(() => {
         if (paidCalsses > 0) {
             setState("Find spot")
@@ -70,7 +103,6 @@ export default function Home() {
         }
     }, [paidCalsses])
       
-
     //Buying classes
     const createPaymentIntent = async () => {
         if (price > 0) {
@@ -86,6 +118,48 @@ export default function Home() {
             const data = await response.json()
             setClientSecret(data.clientSecret)
         }   
+    }
+
+    useEffect(() => {
+        if (nRecurring < 2) {
+            setNRecurring(2)
+        }
+        if (nRecurring > paidCalsses) {
+            setNRecurring(paidCalsses)
+        }
+     }, [nRecurring])
+
+     const checlAvailability = async () => {
+        const url = "/api/classes/check_availability?day=" + day + "&time=" + time
+        const response = await fetch(url, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+        })
+        const data = await response.json()
+        if (data.isAvailable == false) {
+            setAllowBooking(false)
+        }
+    }
+
+     useEffect(() => {
+        checlAvailability()
+     }, [day, time])
+
+
+    const tryCalendarAPI = async () => {
+        const idToken = await auth.currentUser.getIdToken();
+        const url = "/api/classes/add_event?tutor_email=" + matchTutor?.email + "&student_email=" + user?.email 
+        const response = await fetch(url, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+                Authorization: `Bearer ${idToken}`, 
+            },
+            body: JSON.stringify(auth.currentUser),
+        })
+        const data = await response.json()
     }
    return (
     <main>
@@ -106,23 +180,26 @@ export default function Home() {
                 ) : (<></>)}
             </div>
         ) : (<></>)}
-        
         {state == "Find spot" ? (
-            <div>
-                <input type="date"></input>
-                <input type="time"></input>
+            <div className='flex flex-cols gap-12'>
+                <p className='font-bold text-xl bg-12'>Tienes {paidCalsses} pagadas con {matchTutor.username}</p>
+                <input onChange={(e) => setDay(e.target.value)} type="date"></input>
+                <input onChange={(e) => setTime(e.target.value)} type="time"></input>
                 <p>Cada semana?</p>
-                <input type="checkbox"></input>
-                <p>cuantas clases quieres reservar</p>
-                <input type="number"></input>
-             </div>
-        ) : (<></>)}
+                <input onChange={(e) => setRecurring(!recurring)} type="checkbox"></input>
+                {recurring ? (
+                    <div>
+                        <p>cuantas clases quieres reservar</p>
+                        <input onChange={(e) => setNRecurring(e.target.value)} max={paidCalsses} placeholder={2} min={2} type="number"></input>
+                    </div>
+                ) : (<></>)}
+                <button onClick={bookClasses} className='p-3 bg-blue-200'>Reservar classes</button>
+                </div>
+                ) : (<></>)}
         {state == "Buy classes" ? (
             <div>
-                {price}
                 <p>No te quedan clases con {matchTutor.username}, comprar más para reservar clases</p>
                 <div>
-                    {price}
                     <button className='px-4 py-2 bg-red-200 rounded' onClick={() => setPrice(1*matchTutor.prices.one_class * 100)} type="submit">Checkout 1 class</button>
                     <button className='px-4 py-2 bg-blue-200 rounded' onClick={() => setPrice(10*matchTutor.prices.ten_classes * 100)} type="submit">Checkout 10 classes</button>
                     <button className='px-4 py-2 bg-green-200 rounded' onClick={() => setPrice(20*matchTutor.prices.twenty_classes * 100)} type="submit">Checkout 20 class</button>
@@ -131,14 +208,13 @@ export default function Home() {
                 <button onClick={createPaymentIntent}>Chektou</button>
 
                 <Elements stripe={stripePromise}>
-                    <CheckoutForm clientSecret={clientSecret} />
+                    <CheckoutForm nClasses={nClasses} clientSecret={clientSecret} student_email={user?.email} tutor_email={matchTutor?.email} />
                 </Elements>
              </div>
-
         ) : (<></>)}
-       
-
-
+        <div className='pt-40'>
+            <button onClick={tryCalendarAPI} className='bg-red-200'>Try Calendar API</button>
+        </div>
     </main>
   )
 }

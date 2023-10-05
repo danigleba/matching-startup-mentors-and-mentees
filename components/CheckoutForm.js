@@ -1,10 +1,13 @@
 import { CardElement, useStripe, useElements } from "@stripe/react-stripe-js";
+import {useRouter} from 'next/router'
 
-export default function CheckoutForm({ clientSecret }) {
+export default function CheckoutForm({ clientSecret, student_email, tutor_email, nClasses}) {
+  const router = useRouter()
   const stripe = useStripe();
   const elements = useElements();
 
   const handleSubmit = async (event) => {
+    //const router = useRouter()
     event.preventDefault();
 
     if (!stripe || !elements) {
@@ -21,10 +24,19 @@ export default function CheckoutForm({ clientSecret }) {
       console.error(result.error.message);
     } else if (result.paymentIntent.status === "succeeded") {
       console.log("Payment successful!");
-      // You can add code here to handle a successful payment
+
       //send emails to teacher and student
-      //chagen paid_classes
-      //reload page
+      const url = "/api/classes/add_paid_classes?student_email=" + student_email + "&tutor_email=" + tutor_email + "&nClasses=" + nClasses
+      const response = await fetch(url, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        }
+      })
+      const data = await response.json()
+      if (data.classesAdded == true) {
+        router.reload()
+      }
     }
   }
 

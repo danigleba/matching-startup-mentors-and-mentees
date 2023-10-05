@@ -9,7 +9,8 @@ const firebaseConfig = {
   projectId: "cornelio-9f37a",
   storageBucket: "cornelio-9f37a.appspot.com",
   messagingSenderId: "508669213208",
-  appId: "1:508669213208:web:f05526cf410ff57d73216d"
+  appId: "1:508669213208:web:f05526cf410ff57d73216d",
+  clientId: "605098004143-qhd7j3t7fb1p72sllu320fgg9b21f6bj.apps.googleusercontent.com"
 }
 
 const app =  initializeApp(firebaseConfig)

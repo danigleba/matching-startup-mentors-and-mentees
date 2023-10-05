@@ -1,5 +1,5 @@
 import { db } from '@/utils/firebase'
-import { collection, query, where, getDocs } from 'firebase/firestore'
+import { collection, query, where, getDocs, updateDoc } from 'firebase/firestore'
 
 export default async function (req, res) {
   const tutor_email = req.query.tutor_email
@@ -10,22 +10,25 @@ export default async function (req, res) {
   const queryStudentSnap = await getDocs(studentSnap)
 
   try {
-    let tutorValue = null;
+    let tutorValue = null
 
-    queryStudentSnap.forEach((doc) => {
+    queryStudentSnap.forEach(async (doc) => {
+      const studentDocRef = doc.ref
       const paidClasses = doc.data().paid_classes
 
       if (paidClasses && tutor_email in paidClasses) {
-        tutorValue = paidClasses[tutor_email]
-        return
+        tutorValue = paidClasses[tutor_email];
+        res.status(200).json({ data: tutorValue })
+      } else {
+        const updatedPaidClasses = {
+          ...paidClasses,
+          [tutor_email]: 0,
+        }
+        await updateDoc(studentDocRef, { paid_classes: updatedPaidClasses });
+        tutorValue = updatedPaidClasses[tutor_email];
+        res.status(200).json({ data: tutorValue })
       }
-    });
-
-    if (tutorValue !== null) {
-      res.status(200).json({ data: tutorValue })
-    } else {
-      res.status(404).json({ message: 'Tutor not found for the given student.' })
-    }
+    })
   } catch (error) {
     console.log(error)
     res.status(500).json({ message: 'Server error.' })
