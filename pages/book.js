@@ -56,18 +56,21 @@ export default function Home() {
     }
 
     const bookClasses = async () => {
-        if (day != "" && time != "") {
-            const url = "/api/classes/add_classes?tutor_email=" + matchTutor?.email + "&student_email=" + user?.email + "&time=" + time + "&profile_url=" + user?.profile_url  + "&day=" + day + "&recurring=" + recurring + "&nRecurring=" + nRecurring
-            fetch(url)
-                .then(response => response.json())
-                .then(data => setPaidClasses(data.data))
+        if (allowBooking) {
+            if (day != "" && time != "") {
+                const url = "/api/classes/add_classes?tutor_email=" + matchTutor?.email  + "&tutor_username=" + matchTutor?.username + "&student_email=" + user?.email  + "&student_username=" + user?.username + "&time=" + time + "&profile_url=" + user?.profile_url  + "&day=" + day + "&recurring=" + recurring + "&nRecurring=" + nRecurring
+                fetch(url)
+                    .then(response => response.json())
+                    .then(data => setPaidClasses(data.data))
 
-            const url2 = "/api/classes/delete_paid_classes?tutor_email=" + matchTutor?.email + "&student_email=" + user?.email + "&nBooked=" + nRecurring + "&recurring=" + recurring
-            fetch(url2)
-                .then(response => response.json())
-                .then(data => setPaidClasses(data.data)) 
+                const url2 = "/api/classes/delete_paid_classes?tutor_email=" + matchTutor?.email + "&student_email=" + user?.email + "&nBooked=" + nRecurring + "&recurring=" + recurring
+                fetch(url2)
+                    .then(response => response.json())
+                    .then(data => setPaidClasses(data.data)) 
+            }
+        } else {
+            console.log("Esta hora ya esta reservada")
         }
-
     }
 
     useEffect(() => {
@@ -138,29 +141,19 @@ export default function Home() {
             },
         })
         const data = await response.json()
+        console.log(data)
         if (data.isAvailable == false) {
             setAllowBooking(false)
+        } else {
+            setAllowBooking(true)
         }
     }
 
      useEffect(() => {
-        checlAvailability()
+        if (day != "" && time != "") {
+            checlAvailability()
+        }
      }, [day, time])
-
-
-    const tryCalendarAPI = async () => {
-        const idToken = await auth.currentUser.getIdToken();
-        const url = "/api/classes/add_event?tutor_email=" + matchTutor?.email + "&student_email=" + user?.email 
-        const response = await fetch(url, {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json",
-                Authorization: `Bearer ${idToken}`, 
-            },
-            body: JSON.stringify(auth.currentUser),
-        })
-        const data = await response.json()
-    }
    return (
     <main>
         <Header user={auth.currentUser}/>
@@ -182,6 +175,7 @@ export default function Home() {
         ) : (<></>)}
         {state == "Find spot" ? (
             <div className='flex flex-cols gap-12'>
+                {allowBooking}
                 <p className='font-bold text-xl bg-12'>Tienes {paidCalsses} pagadas con {matchTutor.username}</p>
                 <input onChange={(e) => setDay(e.target.value)} type="date"></input>
                 <input onChange={(e) => setTime(e.target.value)} type="time"></input>
@@ -212,9 +206,6 @@ export default function Home() {
                 </Elements>
              </div>
         ) : (<></>)}
-        <div className='pt-40'>
-            <button onClick={tryCalendarAPI} className='bg-red-200'>Try Calendar API</button>
-        </div>
     </main>
   )
 }

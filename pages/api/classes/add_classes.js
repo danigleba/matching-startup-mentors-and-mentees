@@ -4,6 +4,8 @@ import { collection, addDoc } from "firebase/firestore";
 export default async function (req, res) {
     const student_email = req.query.student_email
     const tutor_email = req.query.tutor_email
+    const tutor_username = req.query.tutor_username
+    const student_username = req.query.student_username
     const day = req.query.day
     const time = req.query.time
     const recurring = req.query.recurring
@@ -24,7 +26,9 @@ export default async function (req, res) {
                     day: currentDate.toISOString().split('T')[0],
                     start_time: time,
                     end_time: end_time,
-                    link: ""
+                    link: "",
+                    student_name: student_username,
+                    tutor_name: tutor_username
                 })
                 currentDate.setDate(currentDate.getDate() + 7)
             }
@@ -37,7 +41,9 @@ export default async function (req, res) {
                 day: day,
                 start_time: time,
                 end_time: end_time,
-                link: ""
+                link: "",
+                student_name: student_username,
+                tutor_name: tutor_username
             })
             res.status(200).json({classCreated: true})
         }

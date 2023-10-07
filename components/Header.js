@@ -15,7 +15,7 @@ export default function Header(props) {
         })    
       }, [])
     return (
-        <main className="my-4 h-max flex justify-between items-center">
+        <main className="my-4 h-max flex justify-between items-center px-8">
             <div>
                 <p className='font-bold text-xl'>cornelio</p>
             </div>

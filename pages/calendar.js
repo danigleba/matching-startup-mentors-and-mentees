@@ -3,7 +3,7 @@ import Header from '@/components/Header'
 import { useState, useEffect } from 'react'
 import {onAuthStateChanged} from "firebase/auth"
 import {auth} from '@/utils/firebase'
-import NextClasses from '@/components/NextClasses'
+import Calendar from '@/components/Calendar'
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -21,7 +21,7 @@ export default function Home() {
   return (
     <main>
       <Header user={user} />
-      <NextClasses user={user}/>
+      <Calendar user={user}/>
     </main>
   )
 }
