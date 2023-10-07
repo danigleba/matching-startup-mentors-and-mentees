@@ -42,7 +42,7 @@ export default function Calendar(props) {
                     <Image className='rounded-full' alt="Student's profile picture" height={50} width={50} src={item?.profile_url} />
                     <div>
                       <p className="font-bold">{item?.day.substr(-2)} de {months[parseInt(item?.day.slice(5, 7)) - 1]}, {item?.start_time} h</p>
-                      <p className="font-light">Con {item.student_name}</p>
+                      <p className="font-light">Con {item.tutor_name}</p>
                     </div>
                   </div>
                 </div>
