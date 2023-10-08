@@ -5,6 +5,7 @@ export default async function (req, res) {
     const student_email = req.query.student_email
     const tutor_email = req.query.tutor_email
     const tutor_username = req.query.tutor_username
+    const tutor_profile = req.query.tutor_profile
     const student_username = req.query.student_username
     const day = req.query.day
     const time = req.query.time
@@ -20,7 +21,8 @@ export default async function (req, res) {
             let currentDate = new Date(day)
             for (let i = 0; i < nRecurring; i++) {
                 const newClass = await addDoc(collection(db, "classes"), {
-                    profile_url: profile_url,
+                    student_profile: profile_url,
+                    tutor_profile: tutor_profile,
                     student: student_email,
                     tutor: tutor_email,
                     day: currentDate.toISOString().split('T')[0],
@@ -35,7 +37,8 @@ export default async function (req, res) {
             res.status(200).json({ classCreated: true })
         } else {
             const newClass = await addDoc(collection(db, "classes"), {
-                profile_url: profile_url,
+                student_profile: profile_url,
+                tutor_profile: tutor_profile,
                 student: student_email,
                 tutor: tutor_email,
                 day: day,

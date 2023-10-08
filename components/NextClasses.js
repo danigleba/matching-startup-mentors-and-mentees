@@ -56,7 +56,7 @@ export default function NextClasses(props) {
               <div className='w-full bg-white shadow-[0_0px_50px_rgb(0,0,0,0.08)] rounded-xl p-6'>
                 <div className="flex justify-between pb-8">
                   <div className="flex gap-4">
-                    <Image className='rounded-full' alt="Student's profile picture" height={50} width={50} src={item?.profile_url} />
+                    <Image className='rounded-full' alt="Student's profile picture" height={50} width={50} src={item?.tutor_profile} />
                     <div>
                       <p className="font-bold">{item?.day.substr(-2)} de {months[parseInt(item?.day.slice(5, 7)) - 1]}, {item?.start_time} h</p>
                       <p className="font-light">Con {item.tutor_name}</p>

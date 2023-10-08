@@ -58,7 +58,7 @@ export default function Home() {
     const bookClasses = async () => {
         if (allowBooking) {
             if (day != "" && time != "") {
-                const url = "/api/classes/add_classes?tutor_email=" + matchTutor?.email  + "&tutor_username=" + matchTutor?.username + "&student_email=" + user?.email  + "&student_username=" + user?.username + "&time=" + time + "&profile_url=" + user?.profile_url  + "&day=" + day + "&recurring=" + recurring + "&nRecurring=" + nRecurring
+                const url = "/api/classes/add_classes?tutor_email=" + matchTutor?.email + "&tutor_profile=" + matchTutor?.profile_url + "&tutor_username=" + matchTutor?.username + "&student_email=" + user?.email  + "&student_username=" + user?.username + "&time=" + time + "&profile_url=" + user?.profile_url  + "&day=" + day + "&recurring=" + recurring + "&nRecurring=" + nRecurring
                 fetch(url)
                     .then(response => response.json())
                     .then(data => setPaidClasses(data.data))
