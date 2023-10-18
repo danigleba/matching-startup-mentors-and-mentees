@@ -1,29 +1,42 @@
-import Image from 'next/image'
-import { useEffect } from 'react'
-import { auth } from '@/utils/firebase'
-import { onAuthStateChanged } from 'firebase/auth'
-import { useRouter } from 'next/router'
+import { useEffect } from "react"
+import { useRouter } from "next/router"
+import Image from "next/image"
+import { auth } from "@/utils/firebase"
+import { onAuthStateChanged } from "firebase/auth"
+import AddClassesButton from "./AddClassesButton"
 
-export default function Header(props) {
+export default function Headers(props) {
     const router = useRouter()
-    
+ 
     useEffect(() => {
         onAuthStateChanged(auth, (user) => {
           if (!user) {
             router.push("/login")
           } 
         })    
-      }, [])
+    }, [])
     return (
-        <main className="my-4 h-max flex justify-between items-center px-8">
-            <div>
-                <p className='font-bold text-xl'>cornelio</p>
-            </div>
-            <div className="flex items-center gap-4">
+        <main className="pb-24 w-full">
+            <div className="fixed px-4 md:px-6 py-4 md:py-2  flex justify-between items-center bg-white w-screen">
                 <div>
-                    <p className="font-bold text-lg">{props?.user?.displayName}</p>
+                    <button onClick={() => router.push("/")}>
+                        <Image alt="Cornelio's logo" height={80} width={80} src="https://firebasestorage.googleapis.com/v0/b/cornelio-9f37a.appspot.com/o/cornelio_logo.png?alt=media&token=9b76d88a-641f-499f-92d2-69b4065e0b59&_gl=1*1moty0o*_ga*Njg1NzExNjYxLjE2OTA2MzY3Mjk.*_ga_CW55HF8NVT*MTY5NzUzNTE2Ny4xOTMuMS4xNjk3NTM1MTcyLjU1LjAuMA.." />
+                    </button>
                 </div>
-                <Image className='rounded-full' alt="Tutor's profile picture" height={50} width={50} src={props?.user?.photoURL}/>
+                <div className='hidden md:flex font-medium text-lg gap-12'>
+                    <a href="/">Clases</a>
+                    <a href="/#files">Documentos</a>
+                    <a href="/calendar">Calendario</a>
+                </div>
+                <div className="flex items-center gap-4">
+                    <div className="hidden md:block">
+                    <AddClassesButton user={props?.user} />
+                    </div>
+                    <div>
+                        <p className="hidden md:flex font-semibold text-lg">{props?.user?.displayName}</p>
+                    </div>
+                    <Image className='rounded-full' alt="Tutor's profile picture" height={50} width={50} src={props?.user?.photoURL}/>
+                </div>
             </div>
         </main>
     )

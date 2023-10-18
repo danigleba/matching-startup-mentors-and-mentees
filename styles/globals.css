@@ -3,5 +3,7 @@
 @tailwind utilities;
 
 @layer base {
-
+    h2 {
+      @apply text-[#252422] font-semibold text-xl md:text-2xl text-left;
+    }
 }

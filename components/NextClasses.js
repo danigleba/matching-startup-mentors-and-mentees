@@ -2,6 +2,11 @@ import { useEffect, useState } from 'react'
 import Image from 'next/image'
 import { FiArrowRight } from 'react-icons/fi'
 import { FiArrowLeft } from 'react-icons/fi'
+import { BiSolidLeftArrow } from 'react-icons/bi'
+import { BiSolidRightArrow } from 'react-icons/bi'
+import { TiDelete } from 'react-icons/ti'
+import AddClassButton from './AddClassesButton'
+import ClassCard from './ClassCard'
 
 export default function NextClasses(props) {
     const [classes, setClasses] = useState([])
@@ -47,47 +52,53 @@ export default function NextClasses(props) {
   const visibleClasses = classes.slice(slide, slide + nSlide)
 
   return (
-    <main className="pt-8 overflow-hidden">
-      <h2 className='px-8'>Tus clases de hoy</h2>
-      <div className="flex w-screen items-center">
-        <div className={`px-8 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 w-full transform transition-transform duration-300 ease-in-out -translate-x-${slide * (100 / nSlide)}%`}>
-          {visibleClasses.map((item) => (
-            <a key={item.id}>
-              <div className='w-full bg-white shadow-[0_0px_50px_rgb(0,0,0,0.08)] rounded-xl p-6'>
-                <div className="flex justify-between pb-8">
-                  <div className="flex gap-4">
-                    <Image className='rounded-full' alt="Student's profile picture" height={50} width={50} src={item?.tutor_profile} />
-                    <div>
-                      <p className="font-bold">{item?.day.substr(-2)} de {months[parseInt(item?.day.slice(5, 7)) - 1]}, {item?.start_time} h</p>
-                      <p className="font-light">Con {item.tutor_name}</p>
-                    </div>
-                  </div>
-                </div>
-                <div className='flex flex-col gap-4'>
-                  <button className='bg-black font-medium text-white py-2 rounded-md hover:bg-[#f4f4f4] hover:text-black duration-200'>Empezar clase</button>
-                  <button className='border-2 border-red-400 font-medium text-red-400 py-1.5 rounded-md hover:bg-red-400 hover:text-white duration-200'>Cancelar clase</button>
-                </div>
+    <main className="pt-8 md:mx-6 mx-4">
+      <div className='mb-6  flex items-center gap-4'>
+        <div className='flex items-center'>
+          <h2 className=''>Clases del día</h2>
+        </div>
+          <AddClassButton />
+      </div>
+      <div className="flex items-center w-full">
+      {classes?.length > 0 ? (
+        <div className='w-screen'>
+          <div className="w-full grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8 w-full">
+            {visibleClasses.map((item) => (
+              <a key={item.id}>
+                <ClassCard item={item} />
+              </a>
+            ))}
+          </div>
+          {classes.length > nSlide ? (
+            <div className="pt-6 flex gap-4 justify-center items-center">
+              <button onClick={handlePrevSlide} disabled={slide === 0} className={`${slide === 0 ? "bg-gray-100" : "bg-white shadow-[0_0px_30px_rgb(0,0,0,0.1)]" } flex items-center rounded-full p-3 rounded-md`}>
+                <BiSolidLeftArrow color="#252422" size={20} />
+              </button>
+              <div className="flex justify-center">
+                {classes.map((item, index) => {
+                  const className = `h-2.5 w-2.5 mx-1 rounded-full ${index >= slide && index < slide + nSlide ? 'bg-[#eb4c60]' : 'bg-gray-200'}`;
+                  return (
+                    <div key={item.id} className={className}></div>
+                  );
+                })}
               </div>
-            </a>
-          ))}
-        </div>
-        </div>
-        <div className='flex justify-center items-center'>
-            <div className="flex hover:scale-105 duration-200 rounded-full p-2">
-            <button onClick={handlePrevSlide} disabled={slide === 0}><FiArrowLeft /></button>
+              <div>
+                <button onClick={handleNextSlide} disabled={slide === classes.length - nSlide} className={`${slide === classes.length - nSlide ? "bg-gray-100" : "bg-white shadow-[0_0px_30px_rgb(0,0,0,0.1)]" } flex items-center rounded-full p-3 rounded-md `}>
+                  <BiSolidRightArrow color="#252422" size={20} />
+                </button>
+              </div>
             </div>
-            <div className="flex justify-center mt-4">
-                {classes.map((item, index) => (
-                    <div
-                        key={item.id}
-                        className={`h-3 w-3 mx-1 rounded-full ${index >= slide && index < slide + nSlide ? 'bg-black' : 'bg-gray-400'}`}
-                    ></div>
-                ))}
-            </div>
-            <div className="flex hover:scale-105 duration-200 rounded-full p-2">
-            <button onClick={handleNextSlide} disabled={slide === classes.length - nSlide}><FiArrowRight /></button>
-            </div>
+          ) : (<></>)}
         </div>
+      ) : (
+        <div className='w-full flex-col justify-center'>
+          <p className='text-center font-light text-md md:text-lg'>No tienes ninguna clase más hoy. <br/>Reserva más clases con tus tutores.</p>
+          <div className='pt-6 flex justify-center'>
+            <AddClassButton />
+          </div>
+        </div>
+      )}
+      </div>
     </main>
   )
 }
