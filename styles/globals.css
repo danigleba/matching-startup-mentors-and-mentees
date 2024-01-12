@@ -3,7 +3,19 @@
 @tailwind utilities;
 
 @layer base {
-    h2 {
-      @apply text-[#252422] font-semibold text-xl md:text-2xl text-left;
+    h1 {
+      @apply font-black text-4xl md:text-5xl text-center lg:text-left;
+    }
+
+    button {
+      @apply w-full md:w-max md:px-24 py-3 rounded-lg font-semibold bg-gradient-to-r from-rose-400 to-orange-300 text-[#212121] hover:scale-125 duration-200 ease-in-out;
+    }
+
+    .legal-title {
+      @apply font-semibold text-lg pb-2;
+    }
+
+    .legal-text {
+      @apply font-medium;
     }
 }

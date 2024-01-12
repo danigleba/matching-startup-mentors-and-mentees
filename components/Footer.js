@@ -2,26 +2,40 @@ import Image from "next/image"
 
 export default function Footer() {
     return (  
-        <footer className="mt-24 text-white bg-[#252422] mb-20 md:mb-0">
-            <div className="w-full max-w-screen-xl mx-auto p-4 md:py-8">
-                <div className="sm:flex sm:items-center sm:justify-between">
-                    <button  className="pb-4 md:pb-0" onClick={() => router.push("/")}>
-                        <Image alt="Cornelio's logo" height={80} width={80} src="https://firebasestorage.googleapis.com/v0/b/cornelio-9f37a.appspot.com/o/cornelio_logo_white.png?alt=media&token=60e755c6-df09-4c5b-8828-7f8cef8e8aeb&_gl=1*uhivhl*_ga*Njg1NzExNjYxLjE2OTA2MzY3Mjk.*_ga_CW55HF8NVT*MTY5NzUzNzMyMi4xOTQuMS4xNjk3NTM3MzI3LjU1LjAuMA.." />
-                    </button>
-                    <ul className="flex flex-wrap items-center mb-6 text-sm font-medium text-white sm:mb-0 ">
-                        <li>
-                            <a className="mr-4 md:mr-6 hover:underline">Sobre nosotros</a>
-                        </li>
-                        <li>
-                            <a className="mr-4 md:mr-6 hover:underline">Política de privacidad</a>
-                        </li>
-                        <li>
-                            <a className="hover:underline">Contacto</a>
-                        </li>
-                    </ul>
+        <footer className="bg-[#0f0f0f] md:px-12 pb-16 pt-3 mt-24 h-full w-full">
+            <div className="grid md:grid-cols-2 grid-cols-1 gap-12 mx-8 md:mx-20 mt-12">
+                <div className="flex flex-col items-center md:items-start justify-center">
+                    <div className="flex items-center justify-center md:justify-start gap-2">
+                        <Image alt="icon" src="/icon.png" width={30} height={40}></Image>
+                        <p className="text-[#cfcfcf] font-semibold text-lg">Cornelio</p>
+                    </div>
+                    <p className="text-sm pt-3 text-center md:text-left">Filter user feedback from your comment section</p>
+                    <p className="text-sm text-center md:text-left">Cornelio © 2024 All rights reserved</p>
                 </div>
-                <hr className="my-6 lg:my-8 border-gray-200 sm:mx-auto"/>
-                <span className="block text-sm text-white sm:text-center">© 2023 <a href="https://flowbite.com/" className="hover:underline">Cornelio</a>. Todos los derechos reservados.</span>
+                <div className="md:flex md:justify-end items-center space-y-12 md:space-y-0 gap-24">
+                    <div className="text-center md:text-left">
+                        <p className="font-semibold text-lg pb-2">Social</p>
+                        <div className="space-y-1">
+                            <div>
+                                <a href="https://twitter.com/danigleba" target="_blank" className="hover:underline text-sm">X</a>
+                            </div> 
+                            <div>
+                                <a href="https://www.linkedin.com/in/danigleba/" target="_blank" className="hover:underline text-sm">LinkedIn</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div className="text-center md:text-left">
+                        <p className="font-semibold text-lg pb-2">Legal</p>
+                        <div className="space-y-1">
+                            <div>
+                                <a href="/terms-of-service" className="hover:underline text-sm">Terms of servide</a>
+                            </div> 
+                            <div>
+                                <a href="/privacy-policy" className="hover:underline text-sm">Privacy policy</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
         </footer>
     )

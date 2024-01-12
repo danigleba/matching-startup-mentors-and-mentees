@@ -1,14 +1,17 @@
-import { Inter } from 'next/font/google'
+import Head from 'next/head'
 import Header from '@/components/Header'
 import Footer from '@/components/Footer'
 import { useState, useEffect } from 'react'
-import {onAuthStateChanged} from "firebase/auth"
-import {auth} from '@/utils/firebase'
-import NextClasses from '@/components/NextClasses'
-import Files from '@/components/Files'
-import BottomNavBar from '@/components/BottomNavBar'
+import { onAuthStateChanged } from "firebase/auth"
+import { auth } from '@/utils/firebase'
+import { Inter } from "next/font/google"
+import Features from '@/components/Features'
+import FeaturedOn from '@/components/FeaturedOn'
+import Pricing from '@/components/Pricing'
+import FinalCTA from "@/components/FinalCTA"
+import Hero from '@/components/Hero'
 
-const inter = Inter({ subsets: ['latin'] })
+const inter = Inter({ subsets: ["latin"]})
 
 export default function Home() {
   const [user, setUser] = useState({})
@@ -22,13 +25,19 @@ export default function Home() {
   }, [])
 
   return (
-    <main>
-      <Header user={user} />
-      <NextClasses user={user}/>
-      <div className='my-16'></div>
-      <Files user={user} />
-      <BottomNavBar page={"index"} />
-      <Footer />
-    </main>
+    <>
+      <Head>
+      </Head>
+      <main className={`${inter.className} bg-[#212121]`} >
+        <Header user={user} />
+        {/*Hero*/}
+        <Hero />     
+        <FeaturedOn />
+        <Features />  
+        <Pricing /> 
+        <FinalCTA />
+        <Footer />
+      </main>
+    </>
   )
 }
