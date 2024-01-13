@@ -1,22 +1,53 @@
-import Head from 'next/head'
-import { useEffect, useState } from 'react'
+import Head from "next/head"
+import { useEffect, useState } from "react"
 import { useRouter } from "next/router"
 import Image from "next/image"
-import Header from '@/components/HeaderApp'
-import Footer from '@/components/Footer'
+import Header from "@/components/HeaderApp"
+import Footer from "@/components/Footer"
 import { Inter } from "next/font/google"
 import { Livvic } from "next/font/google"
-import { FaPaste } from "react-icons/fa6";
+import { FaPaste } from "react-icons/fa6"
+import { CardElement, PaymentElement, Elements, useStripe, useElements } from "@stripe/react-stripe-js"
+import { stripe } from "@stripe/stripe-js"
+import { loadStripe } from "@stripe/stripe-js"
+import CheckoutForm from "@/components/CheckoutForm"
 
+const stripePromise = loadStripe(process.env.NEXT_PUBLIC_STRIPE_PUBLIC_KEY_TEST)
 const livvic = Livvic({ subsets: ["latin"], weight: "700"})
 const inter = Inter({ subsets: ["latin"]})
 
-export default function Home() {
+export default function Read() {
     const router = useRouter()
     const [link, setLink] = useState("")
     const [loading, setLoading] = useState(false)
     const [videoId, setVideoId] = useState('')
     const [video, setVideo] = useState(null)
+    const [email, setEmail] = useState("")
+    const [clientSecret, setClientSecret] = useState()
+
+   // const stripe = useStripe()
+    //const elements = useElements()
+    const appearance = {
+        theme: 'stripe',
+    }
+    const options = {
+        clientSecret,
+        appearance,
+    }
+
+    const CreatePaymentIntent = async () => {
+    const stripe = await stripePromise
+    const url = "/api/stripe/create-payment-intent?email=" + email + "&price=" + (parseInt(video?.numberOfComments) / 1000 * 100)
+        const response = await fetch(url, {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json",
+            }
+        })
+    const data = await response.json()
+    setClientSecret(data.clientSecret)
+    }
+  
 
     function extractVideoId(url) {
         const match = url?.match(/[?&]v=([^?&]+)/)
@@ -38,6 +69,7 @@ export default function Home() {
             }
             const data = await response.json()
             setVideo(data)
+            CreatePaymentIntent()
           } catch (error) {
             setErrorMsg("We didn't found that video 🤷‍♀️. Try a different URL")
         }
@@ -50,6 +82,10 @@ export default function Home() {
     useEffect(() => {
         extractVideoId(link)
     }, [link])
+
+    useEffect(() => {
+        console.log(clientSecret)
+    }, [clientSecret])
   return (
     <>
       <Head>
@@ -65,7 +101,7 @@ export default function Home() {
                                 <input onChange={(e) => setLink(e.target.value)} value={link} placeholder="Paste your link here" className="w-full py-3 px-3 rounded-md bg-white text-[#212121] text-sm md:text-md" />
                                 <button onClick={() => pasteClipboard()} className="px-4 w-max md:w-max  bg-gradient-to-r from-[white] to-[white] hover:from-rose-400 hover:to-orange-300 hover:scale-100 text-[#0f0f0f] hover:text-white duration-0 ease-linear"><FaPaste /></button>
                             </div>
-                            <button onClick={() => {videoId != "" ? getVideo() : ""}} className={`flex justify-center items-center gap-4 px-4 w-full mt-4 ${loading ? "cursor-auto" : ""} ${videoId == "" ? "bg-gradient-to-r from-[#0f0f0f] to-[#0f0f0f] text-white cursor-auto" : ""} hover:scale-100`}>
+                            <button onClick={() => {videoId != "" ?  getVideo() : ""}} className={`flex justify-center items-center gap-4 px-4 w-full mt-4 ${loading ? "cursor-auto" : ""} ${videoId == "" ? "bg-gradient-to-r from-[#0f0f0f] to-[#0f0f0f] text-white cursor-auto" : ""} hover:scale-100`}>
                                 {!loading && videoId != "" &&( <p>Scan my video</p>)}
                                 {!loading && videoId == "" &&( <p>Paste a YouTube URL 👆</p>)}
                                 {loading && (
@@ -84,28 +120,40 @@ export default function Home() {
                     </>
                 )}
                 {video && (
-                    <div className='flex flex-col md:flex-row gap-6 md:gap-24 items-center justify-center'>
-                            <div className='flex flex-col items-center justify-center'>
-                                <div className="w-full aspect-video rounded-lg overflow-hidden">
-                                    <img
-                                        className="w-full h-auto"
-                                        src={video.thumbnail}
-                                        alt="Sample Image"/>                            
+                    <>
+                        <p className={`${livvic.className} text-center text-2xl md:text-3xl pb-4`}>Checkout to get {video?.authorName} users' feedback</p>
+                        <div className='flex grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-24 md:gap-24 items-start justify-center'>
+                                {/*Checkout Form*/}
+                                <div className="w-full space-y-6 order-2">
+                                    <div className="space-y-1">
+                                        <span>Email</span>
+                                        <input className="text-input placeholder:text-[#acb7c3]" value={email} onChange={(e) => setEmail(e.target.value)} type="text" placeholder="name@email.com"/>
+                                    </div>
+                                    {clientSecret && (
+                                        <Elements options={options} stripe={stripePromise} >
+                                            <CheckoutForm email={email} price={(parseInt(video?.numberOfComments) / 1000) >= 0.5 ? parseInt(video?.numberOfComments) / 1000 : "0.5"} clientSecret={clientSecret} />
+                                        </Elements>
+                                    )}
                                 </div>
-                                <div className='flex gap-4 pt-4 w-full'>
-                                    <div className='text-left'>
-                                        <p className='font-semibold break-words'>{video.title}</p>
-                                        <p className='text-gray-500'>{video.authorName}</p>
+                                <div className='flex flex-col items-center justify-center'>
+                                    <div className="w-full aspect-video rounded-lg overflow-hidden">
+                                        <img
+                                            className="w-full h-auto"
+                                            src={video.thumbnail}
+                                            alt="Sample Image"/>                            
+                                    </div>
+                                    <div className='flex gap-4 pt-4 w-full'>
+                                        <div className='text-left'>
+                                            <p className='font-semibold break-words'>{video.title}</p>
+                                            <p className='text-gray-500'>{video.authorName}</p>
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
-                            <div className='w-full'>
-                                <button onClick={handleCheckout} className='w-full px-0 py-4 text-lg hover:scale-115'>Get my user's feedback</button>
-                                <p className="text-center pt-4 text-sm md:mx-12"><i>You'll get all your users' feedback, questions & bug reports in your email inbox</i></p>
-                            </div>
-                    </div>
+                        </div>
+                    </>
                 )}   
             </div>
+            
         <Footer />
       </main>
     </>

@@ -56,7 +56,7 @@ export default function Features() {
                     </div>
                 </div>
             </div>
-            <p className="font-bold text-center mb-4 text-2xl md:text-3xl text-[#cfcfcf] pt-24 pb-6">And get all feedback, questions and bug reports in your inbox</p>
+            <p className="font-bold text-center mb-4 text-2xl md:text-3xl text-[#cfcfcf] pt-24 pb-6">And get all feature requests and bug reports in your inbox</p>
             <div className="flex flex-wrap items-start justify-center gap-6 w-full">
                     <Comment 
                         time="3 months ago"

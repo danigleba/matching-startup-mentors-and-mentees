@@ -16,7 +16,7 @@ export default function Headers(props) {
       }
     }
     return (
-        <header className="flex justify-between items-center w-full pt-6 mb-12 md:mb-24 px-8 md:px-20">
+        <header className="flex justify-between items-center w-full pt-6 mb-12 px-8 md:px-20">
           <Link href="/">
             <div className="flex items-center justify-start gap-2">
               <Image alt="icon" src="/icon.png" width={30} height={40}></Image>
