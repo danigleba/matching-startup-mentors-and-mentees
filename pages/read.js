@@ -28,24 +28,30 @@ export default function Read() {
    // const stripe = useStripe()
     //const elements = useElements()
     const appearance = {
-        theme: 'stripe',
+        theme: 'night',
+        variables: {
+            colorPrimary: '#ee9d83',
+          }
+
     }
+    const loader = 'auto'
     const options = {
         clientSecret,
         appearance,
+        loader
     }
 
     const CreatePaymentIntent = async () => {
-    const stripe = await stripePromise
-    const url = "/api/stripe/create-payment-intent?email=" + email + "&price=" + (parseInt(video?.numberOfComments) / 1000 * 100)
-        const response = await fetch(url, {
-        method: "POST",
-        headers: {
-            "Content-Type": "application/json",
-            }
-        })
-    const data = await response.json()
-    setClientSecret(data.clientSecret)
+        const stripe = await stripePromise
+        const url = "/api/stripe/create-payment-intent?email=" + email + "&numberOfComments=" + video?.numberOfComments
+            const response = await fetch(url, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+                }
+            })
+        const data = await response.json()
+        setClientSecret(data.clientSecret)
     }
   
 
@@ -69,23 +75,25 @@ export default function Read() {
             }
             const data = await response.json()
             setVideo(data)
-            CreatePaymentIntent()
           } catch (error) {
             setErrorMsg("We didn't found that video 🤷‍♀️. Try a different URL")
         }
     }
 
     useEffect(() => {
-        if (video && loading) setLoading(false)
+        if (video && loading) {
+            setLoading(false)
+            CreatePaymentIntent()
+        }
     }, [video])
 
     useEffect(() => {
         extractVideoId(link)
     }, [link])
 
-    useEffect(() => {
-        console.log(clientSecret)
-    }, [clientSecret])
+    const paymentElementOptions = {
+        layout: "tabs",
+      }
   return (
     <>
       <Head>
@@ -95,7 +103,7 @@ export default function Read() {
             <div className={`flex flex-col items-center justify-center w-full px-8 md:px-20 ${!video ? "h-96" : ""}`}>
                 {!video && (
                     <>
-                    <p className={`${livvic.className} text-center text-2xl md:text-3xl pb-4`}>Paste a YouTube link</p>
+                    <p className={`${livvic.className} text-center text-2xl md:text-3xl pb-6`}>Paste a YouTube link</p>
                         <div className='w-full md:w-2/3 px-0 lg:px-20'>
                             <div className='flex justify-center gap-4 w-full'>
                                 <input onChange={(e) => setLink(e.target.value)} value={link} placeholder="Paste your link here" className="w-full py-3 px-3 rounded-md bg-white text-[#212121] text-sm md:text-md" />
@@ -121,18 +129,17 @@ export default function Read() {
                 )}
                 {video && (
                     <>
-                        <p className={`${livvic.className} text-center text-2xl md:text-3xl pb-4`}>Checkout to get {video?.authorName} users' feedback</p>
+                        <p className={`${livvic.className} text-center text-2xl md:text-3xl pb-6`}>Checkout to get {video?.authorName} users' feedback</p>
                         <div className='flex grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-24 md:gap-24 items-start justify-center'>
                                 {/*Checkout Form*/}
                                 <div className="w-full space-y-6 order-2">
-                                    <div className="space-y-1">
-                                        <span>Email</span>
-                                        <input className="text-input placeholder:text-[#acb7c3]" value={email} onChange={(e) => setEmail(e.target.value)} type="text" placeholder="name@email.com"/>
-                                    </div>
+                                    
                                     {clientSecret && (
-                                        <Elements options={options} stripe={stripePromise} >
-                                            <CheckoutForm email={email} price={(parseInt(video?.numberOfComments) / 1000) >= 0.5 ? parseInt(video?.numberOfComments) / 1000 : "0.5"} clientSecret={clientSecret} />
-                                        </Elements>
+                                    
+                                            <Elements options={options} stripe={stripePromise} >
+                                                <CheckoutForm clientSecret={clientSecret} userEmail={email} numberOfComments={video?.numberOfComments} videoId={videoId}/>
+                                            </Elements>
+                                        
                                     )}
                                 </div>
                                 <div className='flex flex-col items-center justify-center'>

@@ -1,19 +1,15 @@
-import { stripe } from "@/utils/stripe"
-
 export default async function handler(req, res) {
     const stripe = require("stripe")(process.env.STRIPE_SECRET_KE_TESTY)
-    const tutor_email = req.query.tutor_email
-    const student_email = req.query.student_email
-    const price = req.query.price
+    const numberOfComments = req.query.numberOfComments
+    const price = numberOfComments >= 500 ? (parseFloat(numberOfComments).toFixed(2) / 1000 * 100) : 100 
 
     try {
       const paymentIntent = await stripe.paymentIntents.create({
         payment_method_types: ["card"],
-        amount: 250, 
+        amount: parseInt(price),
         currency: "eur", 
         metadata: {
-            tutor_email,
-            student_email,
+            
         },
       })
       res.status(200).json({ clientSecret: paymentIntent.client_secret })
