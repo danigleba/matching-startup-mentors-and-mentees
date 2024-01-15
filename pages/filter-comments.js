@@ -22,7 +22,6 @@ export default function Read() {
     const [loading, setLoading] = useState(false)
     const [videoId, setVideoId] = useState('')
     const [video, setVideo] = useState(null)
-    const [email, setEmail] = useState("")
     const [clientSecret, setClientSecret] = useState()
 
    // const stripe = useStripe()
@@ -43,7 +42,7 @@ export default function Read() {
 
     const CreatePaymentIntent = async () => {
         const stripe = await stripePromise
-        const url = "/api/stripe/create-payment-intent?email=" + email + "&numberOfComments=" + video?.numberOfComments
+        const url = "/api/stripe/create-payment-intent?numberOfComments=" + video?.numberOfComments
             const response = await fetch(url, {
             method: "POST",
             headers: {
@@ -129,7 +128,7 @@ export default function Read() {
                 )}
                 {video && (
                     <>
-                        <p className={`${livvic.className} text-center text-2xl md:text-3xl pb-6`}>Checkout to get {video?.authorName} users' feedback</p>
+                        <p className={`${livvic.className} text-center text-2xl md:text-3xl pb-12`}>Checkout to get {video?.authorName} users' feedback</p>
                         <div className='flex grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-24 md:gap-24 items-start justify-center'>
                                 {/*Checkout Form*/}
                                 <div className="w-full space-y-6 order-2">
@@ -137,7 +136,7 @@ export default function Read() {
                                     {clientSecret && (
                                     
                                             <Elements options={options} stripe={stripePromise} >
-                                                <CheckoutForm clientSecret={clientSecret} userEmail={email} numberOfComments={video?.numberOfComments} videoId={videoId}/>
+                                                <CheckoutForm clientSecret={clientSecret} numberOfComments={video?.numberOfComments} videoId={videoId}/>
                                             </Elements>
                                         
                                     )}
