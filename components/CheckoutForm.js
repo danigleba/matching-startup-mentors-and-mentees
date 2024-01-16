@@ -89,6 +89,7 @@ export default function CheckoutForm({ clientSecret, numberOfComments, videoId }
       }
 
       const data = await response.json()
+      console.log(data)
 
       if (data.message == "Email sent.") setStatus("Email sent")
     } 
