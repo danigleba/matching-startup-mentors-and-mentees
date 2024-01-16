@@ -19,10 +19,10 @@ export default function Footer() {
                         <p className="font-semibold text-lg pb-2">Social</p>
                         <div className="space-y-1">
                             <div>
-                                <a href="https://twitter.com/danigleba" target="_blank" className="hover:underline">X</a>
+                                <a href="https://twitter.com/danigleba" target="_blank" className="hover:underline px-12 md:px-0">X</a>
                             </div> 
                             <div>
-                                <a href="https://www.linkedin.com/in/danigleba/" target="_blank" className="hover:underline">LinkedIn</a>
+                                <a href="https://www.linkedin.com/in/danigleba/" target="_blank" className="hover:underline px-12 md:px-0">LinkedIn</a>
                             </div>
                         </div>
                     </div>
@@ -31,10 +31,10 @@ export default function Footer() {
                         <p className="font-semibold text-lg pb-2">Legal</p>
                         <div className="space-y-1">
                             <div>
-                                <a href="/terms-of-service" className="hover:underline">Terms of servide</a>
+                                <a href="/terms-of-service" className="hover:underline px-12 md:px-0">Terms of servide</a>
                             </div> 
                             <div>
-                                <a href="/privacy-policy" className="hover:underline">Privacy policy</a>
+                                <a href="/privacy-policy" className="hover:underline px-12 md:px-0">Privacy policy</a>
                             </div>
                         </div>
                     </div>
