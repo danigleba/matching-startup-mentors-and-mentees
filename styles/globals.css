@@ -3,31 +3,63 @@
 @tailwind utilities;
 
 @layer base {
-    h1 {
-      @apply font-black text-4xl md:text-5xl text-center lg:text-left;
-    }
+  h1 {
+    @apply font-black text-4xl md:text-5xl text-center lg:text-left;
+  }
 
-    h2 {
-      @apply font-black text-2xl md:text-4xl text-center lg:text-left pb-6 md:pb-12;
-    }
+  h2 {
+    @apply font-black text-2xl md:text-4xl text-center lg:text-left pb-6 md:pb-12;
+  }
 
-    span {
-      @apply pb-1;
-    }
+  .section-title {
+    @apply font-bold text-center mb-4 text-2xl md:text-3xl text-[#cfcfcf] pb-6; 
+  }
 
-    button {
-      @apply w-full md:w-max md:px-24 py-3 rounded-lg font-semibold bg-gradient-to-r from-rose-400 to-orange-300 text-[#212121] hover:scale-125 duration-200 ease-in-out;
-    }
+  .header {
+    @apply flex justify-between items-center w-full pt-6 mb-12 md:mb-24 px-8 md:px-20;
+  }
 
-    .text-input {
-      @apply w-full border border-[#dddddd] px-4 py-3 rounded-md text-[#212121] ring-transparent;
-    }
+  span {
+    @apply pb-1;
+  }
 
-    .legal-title {
-      @apply font-semibold text-lg pb-2;
-    }
+  button {
+    @apply w-full md:w-max md:px-24 py-3 rounded-lg font-semibold bg-gradient-to-r from-rose-400 to-orange-300 text-[#212121] hover:scale-125 duration-200 ease-in-out;
+  }
 
-    .legal-text {
-      @apply font-medium;
-    }
+  .text-input {
+    @apply w-full border border-[#dddddd] px-4 py-3 rounded-md text-[#212121] ring-transparent;
+  }
+
+  .testimonial-profile {
+    @apply w-16 aspect-square rounded-full bg-white bg-cover border-4 border-[#212121] bg-center;
+  }
+
+  .comment {
+    @apply flex gap-4 items-start justify-start bg-white pl-5 pr-8 w-full lg:w-max py-3 border border-[#dddddd] rounded-lg; 
+  }
+
+  .hero {
+    @apply grid grid-cols-1 lg:grid-cols-2 md:gap-24 items-center justify-center space-y-12 md:space-y-0 mb-24 px-8 md:px-20;
+  }
+
+  .final-cta {
+    @apply flex flex-col justify-center items-center mx-8 md:mx-12 pt-24 pb-12;
+  }
+
+  .legal-title {
+    @apply font-semibold text-lg pb-2;
+  }
+
+  .legal-text {
+    @apply font-medium;
+  }   
+
+  .legal-button {
+    @apply flex items-center gap-2 text-base bg-gradient-to-r from-[#212121] to-[#212121] bg-[#212121] font-medium text-white w-max hover:scale-100 px-4 py-2;
+  }
+
+  .legal-doc {
+    @apply flex justify-center items-center w-full px-8 md:px-20;
+  }
 }

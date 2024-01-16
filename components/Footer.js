@@ -2,8 +2,9 @@ import Image from "next/image"
 
 export default function Footer() {
     return (  
-        <footer className="bg-[#0f0f0f] md:px-12 pb-16 pt-3 mt-24 h-full w-full">
+        <footer className="bg-[#0f0f0f] h-full w-full md:px-12 pb-16 pt-3 mt-24">
             <div className="grid md:grid-cols-2 grid-cols-1 gap-12 mx-8 md:mx-20 mt-12">
+                {/*Company summary*/}
                 <div className="flex flex-col items-center md:items-start justify-center">
                     <div className="flex items-center justify-center md:justify-start gap-2">
                         <Image alt="icon" src="/icon.png" width={30} height={40}></Image>
@@ -13,6 +14,7 @@ export default function Footer() {
                     <p className="text-sm text-center md:text-left">Cornelio © 2024 All rights reserved</p>
                 </div>
                 <div className="md:flex md:justify-end items-center space-y-12 md:space-y-0 gap-24">
+                    {/*Social*/}
                     <div className="text-center md:text-left">
                         <p className="font-semibold text-lg pb-2">Social</p>
                         <div className="space-y-1">
@@ -24,6 +26,7 @@ export default function Footer() {
                             </div>
                         </div>
                     </div>
+                    {/*Legal*/}
                     <div className="text-center md:text-left">
                         <p className="font-semibold text-lg pb-2">Legal</p>
                         <div className="space-y-1">

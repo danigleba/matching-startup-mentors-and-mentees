@@ -10,35 +10,33 @@ export default async function handler(req, res) {
     if (!response.ok) {
       const data = await response.json()
       res.status(response.status).json({ error: data.error.message })
-      return
     }
 
     const data = await response.json()
 
     if (data.items.length === 0) {
-      res.status(404).json({ error: 'Video not found' })
-      return
+      res.status(404).json({ error: "Video not found" })
     }
 
     const video = data.items[0].snippet
     const statistics = data.items[0].statistics
 
+    //We get the Thumbnail in the maximum resolution available
     const thumbnailUrl =
-      video.thumbnails.maxres && video.thumbnails.maxres.url
-        ? video.thumbnails.maxres.url
-        : video.thumbnails.high.url
+      video.thumbnails.maxres && video.thumbnails.maxres.url ? 
+        video.thumbnails.maxres.url
+        : 
+        video.thumbnails.high.url
 
     const videoInfo = {
       title: video.title,
       authorName: video.channelTitle,
       thumbnail: thumbnailUrl,
       numberOfComments: statistics.commentCount || 0,
-      profilePicture: video.profilePicture
     }
 
     res.status(200).json(videoInfo)
   } catch (error) {
-    console.error('Error fetching YouTube video:', error)
-    res.status(500).json({ error: 'Internal Server Error' })
+    res.status(500).json({ error: "Internal Server Error" })
   }
 }
