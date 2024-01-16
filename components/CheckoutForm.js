@@ -11,7 +11,7 @@ export default function CheckoutForm({ clientSecret, numberOfComments, videoId }
   const price = (parseInt(numberOfComments) / 1000) >= 0.5 ?  parseInt(numberOfComments) / 1000 : "1"
   const [email, setEmail] = useState("")
   const [isLoading, setIsLoading] = useState(false)
-  const [status, setStatus] = useState("Requires Payment")
+  const [status, setStatus] = useState("Filtering comments")
   
   const handleSubmit = async (e) => {
     e.preventDefault()
@@ -99,9 +99,13 @@ export default function CheckoutForm({ clientSecret, numberOfComments, videoId }
 
   const handleSuccesfulPayment = async () => {
     setStatus("Filtering comments")
+    console.log("Filtering Comments")
     const comments = await getAllComments()
+    console.log(comments)
     const filteredComments = await filterComments(comments)
+    console.log(filteredComments)
     sendEmail(filteredComments, email)
+    console.log("Email sent")
   }
   return (
     <>
@@ -135,7 +139,7 @@ export default function CheckoutForm({ clientSecret, numberOfComments, videoId }
         <div className="text-center font-bold text-2xl space-y-6 pt-6 md:pt-0">
           <p className="text-green-400">Payment successful</p>
           <div className="flex items-center justify-center gap-4">
-            <p className="text-md">Reading your comments...</p>
+            <p className="text-xl md:text-2xl">Reading your comments...</p>
             <LoadingAnimation />
           </div>
           <p className="text-base font-light">This may take up to a couple of minutes. <br/> Please don"t close this window.</p>

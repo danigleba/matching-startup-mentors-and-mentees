@@ -57,12 +57,12 @@ export default function FilterComments() {
         try {
             const response = await fetch(`/api/youtube/getVideo?video_id=${videoId}`)
             if (!response.ok) {
-              setErrorMsg("We didn't found that video 🤷‍♀️. Try a different URL")
+              console.log("We didn't found that video 🤷‍♀️. Try a different URL")
             }
             const data = await response.json()
             setVideo(data)
           } catch (error) {
-            setErrorMsg("We didn`t found that video 🤷‍♀️. Try a different URL")
+            console.log("We didn`t found that video 🤷‍♀️. Try a different URL")
         }
     }
 
