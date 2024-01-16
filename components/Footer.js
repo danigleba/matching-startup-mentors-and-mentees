@@ -13,16 +13,16 @@ export default function Footer() {
                     <p className="text-sm pt-3 text-center md:text-left">Filter user feedback from your comment section</p>
                     <p className="text-sm text-center md:text-left">Cornelio © 2024 All rights reserved</p>
                 </div>
-                <div className="md:flex md:justify-end items-center space-y-12 md:space-y-0 gap-24">
+                <div className="md:flex md:justify-end items-center space-y-12 md:space-y-0 gap-24 text-lg md:text-sm">
                     {/*Social*/}
                     <div className="text-center md:text-left">
                         <p className="font-semibold text-lg pb-2">Social</p>
                         <div className="space-y-1">
                             <div>
-                                <a href="https://twitter.com/danigleba" target="_blank" className="hover:underline text-sm">X</a>
+                                <a href="https://twitter.com/danigleba" target="_blank" className="hover:underline">X</a>
                             </div> 
                             <div>
-                                <a href="https://www.linkedin.com/in/danigleba/" target="_blank" className="hover:underline text-sm">LinkedIn</a>
+                                <a href="https://www.linkedin.com/in/danigleba/" target="_blank" className="hover:underline">LinkedIn</a>
                             </div>
                         </div>
                     </div>
@@ -31,10 +31,10 @@ export default function Footer() {
                         <p className="font-semibold text-lg pb-2">Legal</p>
                         <div className="space-y-1">
                             <div>
-                                <a href="/terms-of-service" className="hover:underline text-sm">Terms of servide</a>
+                                <a href="/terms-of-service" className="hover:underline">Terms of servide</a>
                             </div> 
                             <div>
-                                <a href="/privacy-policy" className="hover:underline text-sm">Privacy policy</a>
+                                <a href="/privacy-policy" className="hover:underline">Privacy policy</a>
                             </div>
                         </div>
                     </div>

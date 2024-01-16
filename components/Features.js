@@ -52,7 +52,7 @@ export default function Features() {
                     </div>
                 </div>
             </div>
-            <p className="section-title">And get all feature requests and bug reports in your inbox</p>
+            <p className="section-title pt-24">And get all feature requests and bug reports in your inbox</p>
             {/*Good comments*/}
             <div className="flex flex-wrap items-start justify-center gap-6 w-full">
                 <Comment 

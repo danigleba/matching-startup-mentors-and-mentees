@@ -8,4 +8,5 @@ Your YouTube videos' comment section is filled with great user insight. But filt
 Check it out <a href="https://getcornelio.com" target="_blank">here</a>.
 
 <a href="https://twitter.com/danigleba" target="_blank">My Twitter</a>
+<br>
 <a href="https://www.linkedin.com/in/danigleba/" target="_blank">My LinkedIn</a>

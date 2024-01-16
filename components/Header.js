@@ -24,8 +24,8 @@ export default function Headers() {
       </Link>
       {router.pathname === "/" && (
         <div className="flex font-semibold gap-6 md:gap-12 text-[#cfcfcf]">
-          <a className="hover:underline cursor-pointer" onClick={() => smoothScroll("pricing")}>Pricing</a>
-          <a className="hover:underline cursor-pointer" onClick={() => smoothScroll("features")}>Features</a>
+          <p className="hover:underline cursor-pointer" onClick={() => smoothScroll("pricing")}>Pricing</p>
+          <p className="hover:underline cursor-pointer" onClick={() => smoothScroll("features")}>Features</p>
         </div>
       )}
     </header>
