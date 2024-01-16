@@ -8,9 +8,9 @@ export default async function handler(req, res) {
     const message = {
         to: email,
         from: 'daniglebapuig@gmail.com', 
-        subject: "🎉 Your users' feedback is ready! - Cornelio",
-        text: `Thanks for using Cornelio. Here are the comments our AI has filtered from your video: `,
-        html: `Thanks for using Cornelio. Here are the comments our AI has filtered from your video: <br/><br/> <strong>Useful feedback:</strong> ${parsedComments.useful_feedback} <br/><br/> <strong>Questions:</strong> ${parsedComments.questions} <br/><br/> <strong>Bug reports:</strong> ${parsedComments.bug_reports} `,
+        subject: "💬 Your users' feedback is ready! - Cornelio",
+        text: `Thanks for using Cornelio. Here are the comments our AI has filtered from your video:`,
+        html: `<h2>Thanks for using Cornelio! 🥳 Here are the comments our AI has filtered from your video:</h2> <h3><strong>Useful feedback:</strong></h3> ${parsedComments.useful_feedback} <br/><br/> <h3><strong>Questions:</strong></h3> ${parsedComments.questions} <br/><br/> <h3><strong>Bug reports:</strong></h3> ${parsedComments.bug_reports} `,
       }
     try { 
         sgMail

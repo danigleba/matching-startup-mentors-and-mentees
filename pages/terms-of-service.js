@@ -12,6 +12,25 @@ export default function TOS() {
     return (
         <>
         <Head>
+            {/* Basic Meta Tags */}
+            <meta charSet="utf-8" />
+            <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+            <meta name="description" content="Your YouTube videos' comment section is filled with great user insight. But filtering the thousands of meaningless comments is too time-consuming. Let our AI do that for you and get all that user feedback, questions and bug reports in your inbox."/>
+            {/* Open Graph Meta Tags */}
+            <meta property="og:title" content="Cornelio | Filter user feedback from your comment section" />
+            <meta property="og:description" content="Your YouTube videos' comment section is filled with great user insight. But filtering the thousands of meaningless comments is too time-consuming. Let our AI do that for you and get all that user feedback, questions and bug reports in your inbox." />
+            <meta property="og:image" content="/icon.png" />
+            <meta property="og:url" content="getcornelio.com/terms-of-service" />
+            <meta property="og:type" content="website" />
+            {/* Twitter Meta Tags */}
+            <meta name="twitter:card" content="summary_large_image" />
+            <meta name="twitter:title" content="Cornelio | Filter user feedback from your comment section" />
+            <meta name="twitter:description" content="Your YouTube videos' comment section is filled with great user insight. But filtering the thousands of meaningless comments is too time-consuming. Let our AI do that for you and get all that user feedback, questions and bug reports in your inbox." />
+            <meta name="twitter:image" content="/icon.png" />
+            {/* Favicon */}
+            <link rel="icon" href="/icon.png" />
+            {/* Page Title */}
+            <title>Cornelio | Filter user feedback from your comment section</title>
         </Head>
         <main className="bg-[#212121]" >
             <Header />
@@ -34,7 +53,7 @@ export default function TOS() {
                         </div>
                         <div >
                             <p className={`${livvic.className} legal-title`}>SaaS Subscription</p>
-                            <p className='legal-text'>Cornelio offers SaaS subscriptions accessible through getcornelio.com. Payment for subscriptions is processed through Stripe. By subscribing, you agree to Stripe's terms and conditions.</p>
+                            <p className='legal-text'>Cornelio offers SaaS subscriptions, accessible through getcornelio.com. Payments for subscriptions are processed through Stripe. By subscribing, you agree to Stripe's terms and conditions.</p>
                         </div>
                         <div >
                             <p className={`${livvic.className} legal-title`}>Payment and Billing</p>

@@ -1,49 +1,14 @@
 import { PaymentElement, useStripe, useElements, LinkAuthenticationElement, linkAuthenticationElement} from "@stripe/react-stripe-js"
-import { useRouter } from "next/router"
 import { useEffect, useState  } from "react";
 
 export default function CheckoutForm({ clientSecret, numberOfComments, videoId }) {
-  const router = useRouter()
   const stripe = useStripe()
   const elements = useElements()
   const [email, setEmail] = useState("")
-  const [message, setMessage] = useState(null)
   const [isLoading, setIsLoading] = useState(false)
   const [userPayed, setUserPayed] = useState(false)
   const [emailSent, setEmailSent] = useState(false)
   const [filteredComments, setFilteredComments] = useState("")
-
-  useEffect(() => {
-    if (!stripe || !clientSecret) {
-      return;
-    }
-
-    /*const clientSecret2 = new URLSearchParams(window.location.search).get(
-      "payment_intent_client_secret"
-    );
-
-    if (!clientSecret) {
-      return;
-    }*/
-
-    stripe.retrievePaymentIntent(clientSecret).then(({ paymentIntent }) => {
-      switch (paymentIntent.status) {
-        case "succeeded":
-          setMessage("Payment succeeded!");
-          break;
-        case "processing":
-          setMessage("Your payment is processing.");
-          break;
-        case "requires_payment_method":
-          setMessage("");
-          break;
-        default:
-          setMessage("Something went wrong.");
-          break;
-      }
-    });
-  }, [stripe]);
-
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -52,7 +17,7 @@ export default function CheckoutForm({ clientSecret, numberOfComments, videoId }
       return;
     }
 
-    setIsLoading(true);
+    setIsLoading(true)
 
     const { error } = await stripe.confirmPayment({
       elements,
@@ -63,6 +28,7 @@ export default function CheckoutForm({ clientSecret, numberOfComments, videoId }
     });
 
     stripe.retrievePaymentIntent(clientSecret).then(({ paymentIntent }) => {
+      if (paymentIntent.status == "requires_payment_method") setIsLoading(false)
       if (paymentIntent.status == "succeeded") handleSuccesfulPayment()
     }
     )
@@ -79,7 +45,9 @@ export default function CheckoutForm({ clientSecret, numberOfComments, videoId }
         (comment, index) =>
           `${comment.text}`
       )
-        return comments.join("-")
+      
+      const allComments = comments.join("-")
+      return allComments.replaceAll("<br>", "")
     } catch (error) {
       console.error('Error fetching comments:', error.message)
     } 
@@ -146,7 +114,8 @@ export default function CheckoutForm({ clientSecret, numberOfComments, videoId }
             <LinkAuthenticationElement
               onChange={(e) => setEmail(e.value.email)}
               options={paymentElementOptions} 
-              className="pb-3"/>
+              className="pb-3"
+              id="email-element"/>
             <PaymentElement id="payment-element" options={paymentElementOptions} />
             <button className="w-full mt-8 hover:scale-100" disabled={isLoading || !stripe || !elements} id="submit">
               <span id="button-text">
@@ -164,8 +133,6 @@ export default function CheckoutForm({ clientSecret, numberOfComments, videoId }
                   `Checkout $${parseFloat(price).toFixed(2)}`}
               </span>
             </button>
-            {/* Show any error or success messages */}
-            {message && <div className="text-center pt-2" id="payment-message">{message}</div>}
           </form>
           )}
           {userPayed && (
@@ -188,7 +155,7 @@ export default function CheckoutForm({ clientSecret, numberOfComments, videoId }
       {emailSent && (
         <div className="text-center font-bold text-xl md:text-2x pt-6 md:pt-0">
           <p className="text-green-400 pb-6 text-2xl">Done!</p> 
-          <p className="font-bold text-lg text-md pb-3 words-break ">Check {email}'s inbox <br/>for your user feedback, bug reports and questions</p>
+          <p className="font-bold text-lg text-md pb-3 words-break ">Check {email}'s inbox for your user feedback, bug reports and questions</p>
           <p className="font-light text-base pb-12">Thank you for using Cornelio 🥳</p>
           <a href="https://www.gmail.com" target="_blank">
             <button className="text-base mb-6">Go to my inbox</button>
