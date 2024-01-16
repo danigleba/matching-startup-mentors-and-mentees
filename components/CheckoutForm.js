@@ -1,27 +1,25 @@
-import { useState  } from "react"
+import { useState } from "react"
 import { PaymentElement, useStripe, useElements, LinkAuthenticationElement } from "@stripe/react-stripe-js"
 import LoadingAnimation from "./LoadingAnimation"
 
 export default function CheckoutForm({ clientSecret, numberOfComments, videoId }) {
   const stripe = useStripe()
   const elements = useElements()
-  const [email, setEmail] = useState("")
-  const price = (parseInt(numberOfComments) / 1000) >= 0.5 ?  parseInt(numberOfComments) / 1000 : "1"
   const paymentElementOptions = {
     layout: "tabs",
   }
+  const price = (parseInt(numberOfComments) / 1000) >= 0.5 ?  parseInt(numberOfComments) / 1000 : "1"
+  const [email, setEmail] = useState("")
   const [isLoading, setIsLoading] = useState(false)
-  const [status, setStatus] = "Requires payment"
-
+  const [status, setStatus] = useState("Requires Payment")
+  
   const handleSubmit = async (e) => {
     e.preventDefault()
-
     if (!stripe || !elements) {
       return
     }
 
     setIsLoading(true)
-
     const { error } = await stripe.confirmPayment({
       elements,
       confirmParams: {
@@ -46,10 +44,12 @@ export default function CheckoutForm({ clientSecret, numberOfComments, videoId }
       const comments = data.comments.map(
         (comment, index) =>
           `${comment.text}`
-      )   
+      )
+
       const allComments = comments.join("-")
       return allComments.replaceAll("<br>", "")
-    } catch (error) {
+    } 
+    catch (error) {
       console.error("Error fetching comments:", error.message)
     } 
   }
@@ -66,9 +66,11 @@ export default function CheckoutForm({ clientSecret, numberOfComments, videoId }
       if (!response.ok) {
         throw new Error(`HTTP error! Status: ${response.status}`)
       }
+
       const data = await response.json()
       return data.data.message.content
-    } catch (error) {
+    } 
+    catch (error) {
       console.error("Error fetching comments:", error.message)
     } 
   }
@@ -85,9 +87,12 @@ export default function CheckoutForm({ clientSecret, numberOfComments, videoId }
       if (!response.ok) {
         throw new Error(`HTTP error! Status: ${response.status}`)
       }
+
       const data = await response.json()
+
       if (data.message == "Email sent.") setStatus("Email sent")
-    } catch (error) {
+    } 
+    catch (error) {
       console.error("Error fetching comments:", error.message)
     } 
   }
@@ -100,7 +105,7 @@ export default function CheckoutForm({ clientSecret, numberOfComments, videoId }
   }
   return (
     <>
-      {status == "Requires payment" && (
+      {status == "Requires Payment" && (
         <form id="payment-form" onSubmit={handleSubmit}>
           <LinkAuthenticationElement
             id="email-element"
@@ -149,4 +154,3 @@ export default function CheckoutForm({ clientSecret, numberOfComments, videoId }
     </>
   )
 }
-

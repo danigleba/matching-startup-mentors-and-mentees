@@ -16,7 +16,7 @@
   }
 
   .header {
-    @apply flex justify-between items-center w-full pt-6 mb-12 md:mb-24 px-8 md:px-20;
+    @apply flex justify-between items-center w-full pt-6 mb-12 px-8 md:px-20;
   }
 
   span {
