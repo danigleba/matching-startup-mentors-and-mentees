@@ -11,7 +11,7 @@ export default function CheckoutForm({ clientSecret, numberOfComments, videoId }
   const price = (parseInt(numberOfComments) / 1000) >= 0.5 ?  parseInt(numberOfComments) / 1000 : "1"
   const [email, setEmail] = useState("")
   const [isLoading, setIsLoading] = useState(false)
-  const [status, setStatus] = useState("Filtering comments")
+  const [status, setStatus] = useState("Requires Payment")
   
   const handleSubmit = async (e) => {
     e.preventDefault()
