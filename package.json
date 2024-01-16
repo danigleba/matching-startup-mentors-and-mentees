@@ -1,5 +1,5 @@
 {
-  "name": "filter-feedback-from-yt-comments-w-gpt-api", 
+  "name": "filter-feedback-from-yt-comments-w-gpt-api",
   "version": "0.1.0",
   "private": true,
   "scripts": {
@@ -12,6 +12,7 @@
     "@sendgrid/mail": "^8.1.0",
     "@stripe/react-stripe-js": "^2.3.0",
     "@stripe/stripe-js": "^2.3.0",
+    "@vercel/analytics": "^1.1.1",
     "firebase": "^10.4.0",
     "google-auth-library": "^9.1.0",
     "googleapis": "^126.0.1",
