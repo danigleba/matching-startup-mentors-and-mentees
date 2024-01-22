@@ -1,4 +1,5 @@
 import { useRouter } from "next/router"
+import Link from "next/link"
 import { Livvic } from "next/font/google"
 
 const livvic = Livvic({ subsets: ["latin"], weight: "700"})
@@ -7,8 +8,10 @@ export default function FinalCTA() {
     const router = useRouter()
     return (
         <div className="final-cta">
-            <p className={`${livvic.className} text-center text-2xl md:text-3xl mb-12`}>Listen to your users and build something people want 👇</p>
-            <button onClick={() => router.push("/filter-comments")}>Filter my comment section</button>
+            <h2 className="mb-12">Get your Startup to $10k MRR</h2>
+            <Link href="https://pqqg8ji8pbd.typeform.com/to/WKNxkfX8" target="_blank">
+                <button>Find my mentor</button>
+            </Link>
         </div>
     )
 }

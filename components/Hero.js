@@ -1,25 +1,28 @@
 import { useRouter } from "next/router"
+import Link from "next/link"
 import { Livvic } from "next/font/google"
-import Testimonials from "@/components/Testimonials"
+import { IoIosArrowRoundForward } from "react-icons/io";
 
 const livvic = Livvic({ subsets: ["latin"], weight: "700"})
 
 export default function Hero() {
     const router = useRouter()
     return (
-        <div className="hero">
-            <div>
-                <div className="flex flex-col justify-center items-center lg:items-start space-y-8">
-                    <h1 className={livvic.className}>Filter user feedback from your comment section</h1>
-                    <p className="text-[#acacac] text-center lg:text-left md:text-lg">Your YouTube videos" comment section is filled with great user insight. But filtering the thousands of meaningless comments is too time-consuming. Let our AI do that for you and get all that user feedback, questions and bug reports in your inbox.</p>
-                    <button onClick={() => router.push("/filter-comments")}>Get started</button>
+        <div className="hero bg-[#f4f4f4] py-48 lg:py-0 lg:h-screen">
+            <div className="mx-8 md:ml-20 md:mr-10">
+                <div>
+                    <p className="font-medium md:text-lg text-center lg:text-left text-[#222222]">Find a mentor who's already done it, and </p>
+                    <h1>Get your Startup to $10k MRR <a className="bg-[#52b788] text-white px-2"> ASAP</a></h1>
+                    <p className="text-[#222222] text-center lg:text-left md:text-lg">Every successful entrepreneur had a mentor to show them the path. Get mentored by other entrepreneurs making $10k+ MRR and take your Startup to the next level.</p>
                 </div>
-                <Testimonials />
+                <div className="md:flex justify-center lg:justify-start items-end gap-6 w-full pt-12">
+                    <Link href="https://pqqg8ji8pbd.typeform.com/to/WKNxkfX8" target="_blank">
+                        <button>Find my mentor</button>
+                    </Link>
+                    <button onClick={() => router.push("/mentors")} className="flex justify-center items-center gap-2 bg-transparent hover:bg-transparent font-normal text-[#222222] px-0 pt-6 lg:pt-0 hover:gap-4 duration-200 ease-in-out">I'm a mentor<IoIosArrowRoundForward size={25}/></button>
+                </div>
             </div>
-            {/*Video*/}
-            <div className="flex items-start justifuy-center h-full pt-8">
-                <div className="w-full aspect-video bg-white rounded-xl">Video</div>
-            </div>
+            <div className="hidden lg:block w-full h-full bg-[#222222] bg-cover bg-bottom bg-[url('/office.png')]"></div>
         </div>
     )
 }
