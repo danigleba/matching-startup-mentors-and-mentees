@@ -1,10 +1,6 @@
 import Head from "next/head"
 import Header from "@/components/Header"
 import Footer from "@/components/Footer"
-import Features from "@/components/Features"
-import FeaturedOn from "@/components/FeaturedOn"
-import Pricing from "@/components/Pricing"
-import FinalCTA from "@/components/FinalCTA"
 import Hero from "@/components/HeroMentors"
 import { Inter } from "next/font/google"
 

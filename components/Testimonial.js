@@ -1,4 +1,4 @@
-import Image from "next/image";
+import Image from "next/image"
 
 export default function Testimonial(props) {
   return (
@@ -10,8 +10,7 @@ export default function Testimonial(props) {
             alt="User Image"
             width={250}
             height={250}
-            className="object-cover w-full h-full rounded-xl"
-          />
+            className="object-cover w-full h-full rounded-xl"/>
         </div>
         <div className="w-3/5">
           <p className="text-lg font-semibold text-[#52b788] truncate">{props.name}</p>

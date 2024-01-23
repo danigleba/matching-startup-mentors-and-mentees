@@ -1,5 +1,3 @@
-import Image from "next/image"
-
 export default function Footer() {
     return (  
         <footer className="bg-[#f4f4f4] h-full w-full border-t border-[#dddddd] md:px-12 pb-16 pt-3">

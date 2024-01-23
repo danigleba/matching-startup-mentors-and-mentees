@@ -1,5 +1,4 @@
 import { useRouter } from "next/router"
-import Image from "next/image"
 import Link from "next/link"
 
 export default function Headers() {
@@ -18,7 +17,6 @@ export default function Headers() {
     <header className="header absolute">
       <Link href="/">
         <div className="flex items-center justify-start gap-2">
-          {/*<Image alt="Icon" src="/icon.png" width={30} height={30}></Image>*/}
           <p className="text-[#222222] font-extrabold text-xl">Plato</p>
         </div>
       </Link>

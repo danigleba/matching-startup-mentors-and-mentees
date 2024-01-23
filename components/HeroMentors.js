@@ -1,11 +1,8 @@
 import { useRouter } from "next/router"
-import { Livvic } from "next/font/google"
-import { IoIosArrowRoundForward } from "react-icons/io";
-import Link from "next/link";
+import { IoIosArrowRoundForward } from "react-icons/io"
+import Link from "next/link"
 
-const livvic = Livvic({ subsets: ["latin"], weight: "700"})
-
-export default function Hero() {
+export default function HeroMentors() {
     const router = useRouter()
     return (
         <div className="hero bg-[#f4f4f4] py-48 lg:py-0 lg:h-screen">
