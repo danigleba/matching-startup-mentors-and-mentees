@@ -3,7 +3,6 @@ Hi, I'm Dani and I'm on a mission.
 I'm shipping a Startup a week until I find Product-Market-Fit.
 
 Week 2.
-<br/>
 Find a mentor who's already done it, and get your Startup to $10k MRR ASAP
 Every successful entrepreneur had a mentor to show them the path. Get mentored by other entrepreneurs making $10k+ MRR and take your Startup to the next level.
 ----
