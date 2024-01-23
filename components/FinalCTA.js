@@ -9,7 +9,7 @@ export default function FinalCTA() {
     return (
         <div className="final-cta">
             <h2 className="mb-12">Get your Startup to $10k MRR</h2>
-            <Link className="w-full" href="https://pqqg8ji8pbd.typeform.com/to/WKNxkfX8" target="_blank">
+            <Link className="flex justify-center items-center w-full" href="https://pqqg8ji8pbd.typeform.com/to/WKNxkfX8" target="_blank">
                 <button>Find my mentor</button>
             </Link>
         </div>
