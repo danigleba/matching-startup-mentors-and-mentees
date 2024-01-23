@@ -37,7 +37,7 @@
   }
 
   .final-cta {
-    @apply flex flex-col justify-center items-center bg-[#f4f4f4] px-8 md:px-12 mt-24 pt-24 pb-24;
+    @apply flex flex-col justify-center items-center w-full bg-[#f4f4f4] px-8 md:px-12 mt-24 pt-24 pb-24;
   }
 
   .legal-title {
