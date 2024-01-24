@@ -13,7 +13,7 @@ export default function Hero(props) {
                     <p className="text-[#222222] text-center lg:text-left md:text-lg">Every successful entrepreneur had a mentor to show them the path. Get mentored by other entrepreneurs making $10k+ MRR and take your Startup to the next level.</p>
                 </div>
                 <div className="md:flex justify-center lg:justify-start items-end gap-6 w-full pt-12">
-                    <Link href="https://pqqg8ji8pbd.typeform.com/to/WKNxkfX8" target="_blank">
+                    <Link href="https://forms.gle/AJSp2CoqsAWoEjqXA" target="_blank">
                         <button>Find my mentor</button>
                     </Link>
                     <button onClick={() => router.push("/mentors")} className="flex justify-center items-center gap-2 bg-transparent hover:bg-transparent font-normal text-[#222222] px-0 pt-6 lg:pt-0 hover:gap-4 duration-200 ease-in-out">I'm a mentor<IoIosArrowRoundForward size={25}/></button>
